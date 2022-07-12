@@ -38,7 +38,7 @@ function pSpeak($key, $param, $min , $max, $lang = 'EN', $item_id = false)
         if ( $max != '0') $max = ($max > $maxsockets->value ? $maxsockets->value : $max);
         $array[':wert'] = ( $min == $max ? $param : $min.' - '.$max);
     }
-    if($key == 'rep-dur') { //test
+    if($key == 'rep-dur') {
         $array[':wert'] = $param;
     }
     if($key == 'dmg-pois') {
