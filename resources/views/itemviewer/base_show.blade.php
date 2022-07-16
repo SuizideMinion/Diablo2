@@ -39,7 +39,7 @@
 
 
                             <div class="col-lg-4" data-aos="fade-right"><img
-                                    src="{{public_path('items/'.$baseItem->invfile.'.jpg')}}"
+                                    src="{{public_path('items/'.strtolower($baseItem->invfile).'.jpg')}}"
                                     style="float: right; max-width: 100%; max-height: 100%" class="img-fluid"
                                     alt=""></div>
                             <div class="col-lg-8 pt-4 pt-lg-0 content" data-aos="fade-left">
