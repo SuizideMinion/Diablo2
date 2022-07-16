@@ -13,9 +13,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('path.public', function() {
-            return 'http://localhost/dashboard/public/';
-        });
+//        $this->app->bind('path.public', function() {
+//            return 'http://localhost/dashboard/public/';
+//        });
 //        $this->app->instance('path.storage', 'http://localhost/dashboard/');
 //        dd(storage_path());
     }
