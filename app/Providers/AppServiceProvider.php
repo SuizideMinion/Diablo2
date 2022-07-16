@@ -22,7 +22,7 @@ class AppServiceProvider extends ServiceProvider
         else
         {
             $this->app->bind('path.public', function() {
-                return '/';
+                return '';
             });
         }
 //        $this->app->instance('path.storage', 'http://localhost/dashboard/');
