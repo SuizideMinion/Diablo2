@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('orgin_id');
+            $table->string('desc');
             $table->string('key');
             $table->string('value');
         });

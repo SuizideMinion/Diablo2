@@ -176,6 +176,7 @@ class BaseUploadController extends Controller
                 $item = new Skill();
                 $item->name = (isset($json['skilldesc']) ? $json['skilldesc']:'none');
                 $item->orgin_id = $json['*Id'];
+                $item->desc = 'skills';
                 $item->key = $key;
                 $item->value = $value;
                 $item->save();
@@ -201,6 +202,7 @@ class BaseUploadController extends Controller
                     $item = new Skill();
                     $item->name = $json['skilldesc'];
                     $item->orgin_id = $orgin_id->value;
+                    $item->desc = 'desc';
                     $item->key = $key;
                     $item->value = $value;
                     $item->save();
