@@ -24,7 +24,7 @@ Route::resource('bases', \App\Http\Controllers\itemviewer\BaseController::class)
 Route::resource('uniques', \App\Http\Controllers\itemviewer\UniqueCountroller::class);
 
 Route::get('/upload/unique', [\App\Http\Controllers\BaseUploadController::class, 'unique']);
-Route::get('/baseitems/{id}', [\App\Http\Controllers\baseItemShowController::class, 'all']);
+Route::get('/baseitems/{id}', [\App\Http\Controllers\itemviewer\BaseController::class, 'all']);
 
 
 Route::get('/upload/string', [\App\Http\Controllers\BaseUploadController::class, 'strings']);
