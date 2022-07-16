@@ -39,11 +39,11 @@
 
 
                             <div class="col-lg-4" data-aos="fade-right"><img
-                                    src="{{public_path('items/'.strtolower($baseItem->invfile).'.jpg')}}"
+                                    src="{{strtolower(public_path('items/'.$baseItem->invfile.'.jpg'))}}"
                                     style="float: right; max-width: 100%; max-height: 100%" class="img-fluid"
                                     alt=""></div>
                             <div class="col-lg-8 pt-4 pt-lg-0 content" data-aos="fade-left">
-                                <h3>{!! Speak($baseItem->code, 'EN') !!}</h3>
+                                <h3>{!! Speak($baseItem->code, 'EN') !!} {{strtolower(public_path('items/'.$baseItem->invfile.'.jpg'))}}</h3>
                                 <p class="fst-italic">
                                     @if($baseItem->itemLevel == 1) {!! Speak('base.item.viewer.normal_version', 'EN') !!}
                                     @elseif($baseItem->itemLevel == 2) {!! Speak('base.item.viewer.expet_version', 'EN') !!}

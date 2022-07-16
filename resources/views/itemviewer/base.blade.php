@@ -28,7 +28,7 @@
                 <div class="searchbox col-lg-4 col-md-6 portfolio-item filter-app filter-{{$baseItem->type}} filter-{{$baseItem->baseType}}" style="position: absolute; left: 0px; top: 0px;">
                     <div class="portfolio-wrap" style="text-align: center;transition: all ease-in-out 0.3s;display: flex;flex-direction: column;justify-content: center;align-items: center;">
                         <div class="img-fluid" style="height: 110%" alt="">
-                            <a href="{{env('APP_URL') .'bases/' .$baseItem->code}}"> <img src='{{public_path('items/'.$baseItem->invfile.'.jpg')}}'> </a>
+                            <a href="{{env('APP_URL') .'bases/' .$baseItem->code}}"> <img src='{{strtolower(public_path('items/'.$baseItem->invfile.'.jpg'))}}'> </a>
                             <br>
                             {!! Speak($baseItem->code, 'EN') !!}
                             @if($baseItem->itemLevel == 1) (N)
