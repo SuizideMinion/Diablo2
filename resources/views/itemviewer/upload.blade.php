@@ -20,8 +20,8 @@
                         <a href="/upload/gems">{{\App\Models\BaseItemsData::where('key', 'weaponMod1Code')->count()}} Base: Gems </a> |
                         <a href="/upload/prop">{{\App\Models\Properties::count()}} PropNew </a> |
                         <a href="/upload/propertiess">{{\App\Models\PropertiesString::count()}} PropString </a> |
-                        <a href="/upload/skills">{{\App\Models\Skills::count()}} Skills </a> |
-                        <a href="/upload/skilldesc">{{\App\Models\Skills::count()}} Skilldesc </a> |
+                        <a href="/upload/skills">{{\App\Models\Skill::where('desc', 'skill')->count()}} Skills </a> |
+                        <a href="/upload/skilldesc">{{\App\Models\Skill::where('desc', 'desc')->count()}} Skilldesc </a> |
                     </ul>
                     <div class="form-group mt-3">
                         <input type="text" class="form-control" name="subject" id="search-criteria" placeholder="Subject" required="">
