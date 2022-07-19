@@ -15,13 +15,17 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+Route::resources([
+    '/' => \App\Http\Controllers\NewsController::class,
+    'news' => \App\Http\Controllers\NewsController::class,
+    ]);
 
 Route::resource('updates', UpdateController::class);
 Route::resource('bases', \App\Http\Controllers\itemviewer\BaseController::class);
 Route::resource('uniques', \App\Http\Controllers\itemviewer\UniqueCountroller::class);
+Route::resource('user/mules/runes', \App\Http\Controllers\User\Mule\UserMiscController::class, ['names' => 'usermisc']);
+Route::resource('user/data', \App\Http\Controllers\User\UserDataController::class, ['names' => 'userdata']);
 
 Route::get('/upload/unique', [\App\Http\Controllers\BaseUploadController::class, 'unique']);
 Route::get('/baseitems/{id}', [\App\Http\Controllers\itemviewer\BaseController::class, 'all']);

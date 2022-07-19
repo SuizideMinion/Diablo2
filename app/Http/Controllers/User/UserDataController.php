@@ -1,15 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\itemviewer;
+namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\getBaseItem;
-use App\Http\Controllers\getUniqueItem;
-use App\Models\BaseItems;
-use App\Models\UniqueItems;
 use Illuminate\Http\Request;
 
-class UniqueCountroller extends Controller
+class UserDataController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,21 +14,7 @@ class UniqueCountroller extends Controller
      */
     public function index()
     {
-        $Uniques = UniqueItems::all();//all();//all();//all();//where('type', 'weapon')->get
-        $grouped = $Uniques->groupBy('btype');
-
-        if (!isset($Uniques)) abort(404); //TODO:: abort funktioniert noch nicht
-
-        foreach ( $Uniques as $unique)
-        {
-            $UniqueItems[$unique->id]['uniqueItem'] = new getUniqueItem($unique->id);
-            $UniqueItems[$unique->id]['baseitem'] = new getBaseItem($unique->code);
-        }
-//        dd($UniqueItems);
-//        usort($UniqueItems['uniqueItem'], function($a, $b) {
-//            return ($a['index'] > $b['index'] ? 1 : ($a['index'] < $b['index'] ? -1 : 0));
-//        });
-        return view('itemviewer.unique', compact('UniqueItems', 'grouped'));
+        //
     }
 
     /**
@@ -53,7 +35,28 @@ class UniqueCountroller extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $USetting = \App\Models\UserData::where('user_id', auth()->user()->id)->where('key', $request->key)->first();
+        if ( isset($USetting->value) )
+        {
+//            if ($request->value == '' ) {
+//                UserMiscDesc::where('user_misc_id', $id)->delete();
+//            }
+            \App\Models\UserData::where('user_id', auth()->user()->id)
+                ->where('key', $request->key)
+                ->update([
+                    'value' => $request->value
+                ]);
+            echo 'Update=key='.$request->key.'&value='.$request->value;
+        }
+        else
+        {
+            \App\Models\UserData::create([
+                'key' => $request->key,
+                'value' => $request->value,
+                'user_id' => auth()->user()->id
+            ]);
+            echo 'New=key='.$request->key.'&value='.$request->value;
+        }
     }
 
     /**

@@ -29,7 +29,8 @@
 
             "app/Http/Helper/speakHelper.php",
             "app/Http/Helper/getBaseItemClass.php",
-            "app/Http/Helper/getUniqueItemClass.php"
+            "app/Http/Helper/getUniqueItemClass.php",
+            "app/Http/Helper/UserDataHelper.php"
 
         ]
     },

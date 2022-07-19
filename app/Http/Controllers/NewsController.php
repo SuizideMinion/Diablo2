@@ -1,15 +1,11 @@
 <?php
 
-namespace App\Http\Controllers\itemviewer;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Http\Controllers\getBaseItem;
-use App\Http\Controllers\getUniqueItem;
-use App\Models\BaseItems;
-use App\Models\UniqueItems;
+use App\Models\News;
 use Illuminate\Http\Request;
 
-class UniqueCountroller extends Controller
+class NewsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -18,21 +14,11 @@ class UniqueCountroller extends Controller
      */
     public function index()
     {
-        $Uniques = UniqueItems::all();//all();//all();//all();//where('type', 'weapon')->get
-        $grouped = $Uniques->groupBy('btype');
+        $NewsSite = News::where('type', '1')->latest()->get();
+        $NewsDiablo = News::where('type', '2')->latest()->get();
 
-        if (!isset($Uniques)) abort(404); //TODO:: abort funktioniert noch nicht
+        return view('News.index', compact('NewsSite', 'NewsDiablo'));
 
-        foreach ( $Uniques as $unique)
-        {
-            $UniqueItems[$unique->id]['uniqueItem'] = new getUniqueItem($unique->id);
-            $UniqueItems[$unique->id]['baseitem'] = new getBaseItem($unique->code);
-        }
-//        dd($UniqueItems);
-//        usort($UniqueItems['uniqueItem'], function($a, $b) {
-//            return ($a['index'] > $b['index'] ? 1 : ($a['index'] < $b['index'] ? -1 : 0));
-//        });
-        return view('itemviewer.unique', compact('UniqueItems', 'grouped'));
     }
 
     /**
@@ -42,7 +28,7 @@ class UniqueCountroller extends Controller
      */
     public function create()
     {
-        //
+        return view('News.create');
     }
 
     /**
@@ -53,7 +39,21 @@ class UniqueCountroller extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'title' => 'required',
+            'type' => 'required',
+            'text' => 'required'
+        ]);
+
+        $News = new News();
+        $News->type = $request->type;
+        $News->title = $request->title;
+        $News->text = $request->text;
+        $News->user_id = '1';//auth()->user()->id;
+        $News->save();
+
+        return redirect()->route('news.index');
+//        dd($request);
     }
 
     /**

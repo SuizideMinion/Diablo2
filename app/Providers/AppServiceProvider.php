@@ -16,7 +16,7 @@ class AppServiceProvider extends ServiceProvider
         if (request()->getHost() == 'localhost')
         {
             $this->app->bind('path.public', function() {
-                return 'http://localhost/dashboard/public/';
+                return '/';
             });
         }
         else
