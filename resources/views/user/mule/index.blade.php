@@ -159,7 +159,7 @@
                                 </td>
 
                             @endforeach
-                            @php $UserPrice = \App\Models\UserMiscDesc::where('user_misc_id', $UserMule->id)->where('key', $row->code.'0')->first(); @endphp
+                            @php $UserPrice = \App\Models\UserMiscDesc::where('user_id', auth()->user()->id)->where('key', $row->code.'_price')->first(); @endphp
                             <td id="price{{$row->code}}" scope="col" style="width: 45px">
                                 <button
                                     type="button"
