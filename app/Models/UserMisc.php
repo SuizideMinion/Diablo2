@@ -11,6 +11,7 @@ class UserMisc extends Model
 
     protected $fillable = [
         'user_id',
-        'mule'
+        'mule',
+        'server'
     ];
 }

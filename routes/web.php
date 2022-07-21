@@ -24,9 +24,14 @@ Route::resources([
 Route::resource('updates', UpdateController::class);
 Route::resource('bases', \App\Http\Controllers\itemviewer\BaseController::class);
 Route::resource('uniques', \App\Http\Controllers\itemviewer\UniqueCountroller::class);
-Route::resource('user/mules/runes', \App\Http\Controllers\User\Mule\UserMiscController::class, ['names' => 'usermisc']);
+//Route::resource('user/mules/runes', \App\Http\Controllers\User\Mule\UserMiscController::class, ['names' => 'usermisc']);
+Route::post('user/mules/runes/{id}/new', [\App\Http\Controllers\User\Mule\UserMiscController::class, 'newMule']);
+Route::get('user/mules/runes/{server}/edit', [\App\Http\Controllers\User\Mule\UserMiscController::class, 'edit']);
+Route::post('user/mules/runes/{id}/store', [\App\Http\Controllers\User\Mule\UserMiscController::class, 'store']);
+Route::get('user/mules/runes/{id}', [\App\Http\Controllers\User\Mule\UserMiscController::class, 'index']);
+Route::delete('user/mules/runes/{id}', [\App\Http\Controllers\User\Mule\UserMiscController::class, 'destroy']);
+Route::get('user/settings/mules/runes/{id}', [\App\Http\Controllers\User\Mule\UserMiscController::class, 'setting']);
 Route::resource('user/data', \App\Http\Controllers\User\UserDataController::class, ['names' => 'userdata']);
-
 Route::get('/upload/unique', [\App\Http\Controllers\BaseUploadController::class, 'unique']);
 Route::get('/baseitems/{id}', [\App\Http\Controllers\itemviewer\BaseController::class, 'all']);
 
@@ -47,4 +52,9 @@ Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
 
-require __DIR__.'/auth.php';
+Route::get('dashboard', [\App\Http\Controllers\Auth\AuthController::class, 'dashboard']);
+Route::get('login', [\App\Http\Controllers\Auth\AuthController::class, 'index'])->name('login');
+Route::post('custom-login', [\App\Http\Controllers\Auth\AuthController::class, 'customLogin'])->name('login.custom');
+Route::get('registration', [\App\Http\Controllers\Auth\AuthController::class, 'registration'])->name('register-user');
+Route::post('custom-registration', [\App\Http\Controllers\Auth\AuthController::class, 'customRegistration'])->name('register.custom');
+Route::get('signout', [\App\Http\Controllers\Auth\AuthController::class, 'signOut'])->name('signout');

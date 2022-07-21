@@ -18,6 +18,7 @@ return new class extends Migration
             $table->bigInteger('user_misc_id');
             $table->string('key');
             $table->string('value');
+            $table->string('server');
             $table->bigInteger('user_id');
             $table->timestamps();
 

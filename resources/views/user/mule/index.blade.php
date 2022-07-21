@@ -6,96 +6,121 @@
 
             <div class="section-title">
                 <div style="float:left"><h2>Gems and Runes Muleaccounts</h2></div>
+                <div class="row"  style="float:right;display: flex">
+                    <div class="col" style="float:right;display: flex">
+                            <div class="dropdown">
+                                <a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button"
+                                   id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false"
+                                   style="margin: 3px;">
+                                    Server
+                                </a>
 
-                <div style="float:right;display: flex">
-                    <div class="dropdown">
-                        <a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false" style="margin: 3px;">
-                            my Mules
-                        </a>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    <li><a class="dropdown-item" href="/user/mules/runes/scl">Soft Core Ladder</a></li>
+                                    <li><a class="dropdown-item" href="/user/mules/runes/hcl">Hard Core Ladder</a></li>
+                                    <li><a class="dropdown-item" href="/user/mules/runes/scnl">Soft Core Non Ladder</a>
+                                    </li>
+                                    <li><a class="dropdown-item" href="/user/mules/runes/hcnl">Hard Core Non Ladder</a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="dropdown">
+                                <a class="btn btn-outline-secondary dropdown-toggle" href="#" role="button"
+                                   id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false"
+                                   style="margin: 3px;">
+                                    my Mules
+                                </a>
 
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                            @foreach($UserMulesforDrop as $row)
-                                <li><a class="dropdown-item" href="/user/mules/runes?getmule={{$row->id}}">{{$row->mule}}</a></li>
-                            @endforeach
-                            <li><a class="dropdown-item" href="/user/mules/runes">Show All</a></li>
-                        </ul>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                    @foreach($UserMulesforDrop as $row)
+                                        <li><a class="dropdown-item"
+                                               href="/user/mules/runes/{{$id}}?getmule={{$row->id}}">{{$row->mule}}</a></li>
+                                    @endforeach
+                                    <li><a class="dropdown-item" href="/user/mules/runes/{{$id}}">Show All</a></li>
+                                </ul>
+                            </div>
                     </div>
-                    <div class="input-group mb-3">
-                        <form action="" type="GET" style="display: flex">
-                            <input type="text" class="myInput form-control" placeholder="New Mulechar" id="name"
-                                   name="name" required>
-                            <button class="btn btn-outline-secondary" type="submit" value="submit">Add</button>
-                        </form>
+                    <div class="col">
+                        <div class="input-group mb-3">
+                            <form action="/user/mules/runes/{{$id}}/new" type="POST" method="post"
+                                  style="display: flex">
+                                @csrf
+                                @method('POST')
+                                <input type="text" class="myInput form-control" placeholder="New Mulechar" id="name"
+                                       name="name" style="width: 200px" required>
+                                <input type="hidden" id="server" name="srv" value="{{$id}}">
+                                <button class="btn btn-outline-secondary" type="submit" value="submit">Add</button>
+                            </form>
+                        </div>
                     </div>
                 </div>
-                {{--                <p>News from D2Mul.es</p>--}}
             </div>
 
-            <div style="display: flex;width: 100%;justify-content: space-between;">
-                <div class="form-check form-switch">
+            <div class="row align-items-center">
+                <div class="col form-check form-switch">
                     <input onClick="window.setTimeout(function(){location.reload()},500);" id="check"
                            datacode="show_names" class="form-check-input" type="checkbox" role="switch"
                            id="flexSwitchCheckDefault"
                         {{(getUserData('show_names') == false ? 'checked' : '')}}>
-                    <label class="form-check-label" for="flexSwitchCheckDefault">show Names </label>
+                    <label class="form-check-label" for="flexSwitchCheckDefault">show Names</label>
                 </div>
-                <div class="form-check form-switch">
+                <div class="col form-check form-switch">
                     <input onClick="window.setTimeout(function(){location.reload()},500);" id="check"
                            datacode="show_runes" class="form-check-input" type="checkbox" role="switch"
                            id="flexSwitchCheckDefault"
                         {{(getUserData('show_runes') == false ? 'checked' : '')}}>
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Runes </label>
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Runes</label>
                 </div>
-                <div class="form-check form-switch">
+                <div class="col form-check form-switch">
                     <input onClick="window.setTimeout(function(){location.reload()},500);" id="check"
                            datacode="show_pgems" class="form-check-input" type="checkbox" role="switch"
                            id="flexSwitchCheckDefault"
                         {{(getUserData('show_pgems') == false ? 'checked' : '')}}>
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Perfect Gems </label>
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Perfect Gems</label>
                 </div>
-                <div class="form-check form-switch">
+                <div class="col form-check form-switch">
                     <input onClick="window.setTimeout(function(){location.reload()},500);" id="check"
                            datacode="show_fgems" class="form-check-input" type="checkbox" role="switch"
                            id="flexSwitchCheckDefault"
                         {{(getUserData('show_fgems') == false ? 'checked' : '')}}>
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Flawless Gems </label>
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Flawless Gems</label>
                 </div>
-                <div class="form-check form-switch">
+                <div class="col form-check form-switch">
                     <input onClick="window.setTimeout(function(){location.reload()},500);" id="check"
                            datacode="show_ngems" class="form-check-input" type="checkbox" role="switch"
                            id="flexSwitchCheckDefault"
                         {{(getUserData('show_ngems') == false ? 'checked' : '')}}>
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Normal Gems </label>
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Normal Gems</label>
                 </div>
-                <div class="form-check form-switch">
+                <div class="col form-check form-switch">
                     <input onClick="window.setTimeout(function(){location.reload()},500);" id="check"
                            datacode="show_flgems" class="form-check-input" type="checkbox" role="switch"
                            id="flexSwitchCheckDefault"
                         {{(getUserData('show_flgems') == false ? 'checked' : '')}}>
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Flawed Gems </label>
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Flawed Gems</label>
                 </div>
-                <div class="form-check form-switch">
+                <div class="col form-check form-switch">
                     <input onClick="window.setTimeout(function(){location.reload()},500);" id="check"
                            datacode="show_cgems" class="form-check-input" type="checkbox" role="switch"
                            id="flexSwitchCheckDefault"
                         {{(getUserData('show_cgems') == false ? 'checked' : '')}}>
-                    <label class="form-check-label" for="flexSwitchCheckDefault">Chipped Gems </label>
+                    <label class="form-check-label" for="flexSwitchCheckDefault">Chipped Gems</label>
                 </div>
-                <div class="form-check form-switch">
+                <div class="col form-check form-switch">
                     <input onClick="window.setTimeout(function(){location.reload()},500);" id="check"
                            datacode="show_essence" class="form-check-input" type="checkbox" role="switch"
                            id="flexSwitchCheckDefault"
                         {{(getUserData('show_essence') == false ? 'checked' : '')}}>
                     <label class="form-check-label" for="flexSwitchCheckDefault">Essences </label>
                 </div>
-                <div class="form-check form-switch">
+                <div class="col form-check form-switch">
                     <input onClick="window.setTimeout(function(){location.reload()},500);" id="check"
                            datacode="show_organs" class="form-check-input" type="checkbox" role="switch"
                            id="flexSwitchCheckDefault"
                         {{(getUserData('show_organs') == false ? 'checked' : '')}}>
                     <label class="form-check-label" for="flexSwitchCheckDefault">Organs </label>
                 </div>
-                <div class="form-check form-switch">
+                <div class="col form-check form-switch">
                     <input onClick="window.setTimeout(function(){location.reload()},500);" id="check"
                            datacode="show_keys" class="form-check-input" type="checkbox" role="switch"
                            id="flexSwitchCheckDefault"
@@ -115,7 +140,7 @@
                             <div style="float:right">
                                 <span>
                                     <form class=""
-                                          action="{{ action('\App\Http\Controllers\User\Mule\UserMiscController@destroy',  $row->id) }}"
+                                          action="{{ action('\App\Http\Controllers\User\Mule\UserMiscController@destroy',  [$id, 'id='. $row->id]) }}"
                                           method="post">
                                         <button style="padding: 0rem 0rem;" class="btn btn-link" type="submit"><i
                                                 class="bi bi-x"></i></button>
@@ -138,7 +163,7 @@
                         <tr id="{{$row->code}}">
                             <td scope="col"><img
                                     title="{{$row->name}}"
-                                    src="/items/{{\App\Models\BaseItemsData::where('item_id', $row->id)->where('key', 'invfile')->first()->value}}.jpg"
+                                    src="{{strtolower(getInvFile($row->code))}}"
                                     style="height: 30px"></td>
 
                             @if(getUserData('show_names') == false)
@@ -159,7 +184,10 @@
                                 </td>
 
                             @endforeach
-                            @php $UserPrice = \App\Models\UserMiscDesc::where('user_id', auth()->user()->id)->where('key', $row->code.'_price')->first(); @endphp
+                            @php
+                                $UserPrice = \App\Models\UserMiscDesc::where('user_id', auth()->user()->id)->where('key', $row->code.'_price')->where('server', $id)->first();
+                                if($UserPrice) $UPrice = explode('|', $UserPrice->value);
+                            @endphp
                             <td id="price{{$row->code}}" scope="col" style="width: 45px">
                                 <button
                                     type="button"
@@ -172,11 +200,11 @@
                                     data-bs-html="true"
                                     data-bs-placement="left"
                                     data-bs-content="123">
-                                    {{(!$UserPrice ? '0' : $UserPrice->value)}}
+                                    {{(!$UserPrice ? '0' : ($UPrice[0] >= 2 ? $UPrice[1].'.p' : $UPrice[1].'.e'))}}
                                 </button>
                             </td>
                             <td id="sum{{$row->code}}" scope="col" style="width: 45px">
-                                {{\App\Models\UserMiscDesc::where('user_id', auth()->user()->id)->where('key', $row->code)->sum('value')}}
+                                {{\App\Models\UserMiscDesc::where('user_id', auth()->user()->id)->where('key', $row->code)->where('server', $id)->sum('value')}}
                             </td>
                         </tr>
                     @endforeach
@@ -184,14 +212,68 @@
                 </tbody>
 
             </table>
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button
+                        class="nav-link"
+                        id="JSP-tab"
+                        onclick="self.frames['JSPFrame'].location.href = '/user/mules/runes/{{$id}}/?blank=1';"
+                        data-bs-toggle="tab"
+                        data-bs-target="#JSP"
+                        type="button"
+                        role="tab"
+                        aria-controls="JSP"
+                        aria-selected="false"
+                    >
+                        JSP
+                    </button>
+                </li>
+                <li class="nav-item" role="setting" style="float: right;margin-left: auto;">
+                    <button
+                        class="nav-link"
+                        id="setting-tab"
+                        onclick="self.frames['SettingFrame'].location.href = '/user/settings/mules/runes/{{$id}}';"
+                        data-bs-toggle="tab"
+                        data-bs-target="#setting"
+                        type="button" role="tab"
+                        aria-controls="setting"
+                        aria-selected="false"
+                    >
+                        Settings
+                    </button>
+                </li>
+            </ul>
+
+            <div class="tab-content" id="myTabContent">
+                <div class="tab-pane fade" id="JSP" role="tabpanel" aria-labelledby="JSP-tab">
+                    <iframe id="JSPFrame" name="JSPFrame" src="" style="width: 100%;height: 300px"></iframe>
+                </div>
+                <div class="tab-pane fade" id="setting" role="tabpanel" aria-labelledby="setting-tab">
+                    <iframe id="SettingFrame" name="SettingFrame" src="" style="width: 100%;height: 300px"></iframe>
+                </div>
+            </div>
 
         </div>
     </section><!-- End Resume Section -->
     @section('script')
 
-        <script src="http://gsreddy.in/popover/js/popover.min.js"></script>
 
+        <script src="/assets/js/popover.min.js"></script>
         <script>
+            function settingstab() {
+                jQuery.ajax({
+                    type: 'GET',
+                    data: {
+                        'blank': 1
+                    },
+                    url: '/user/settings/mules/runes/',
+                    success: function (data) {
+                        $('#setting').text('');
+                        $('#setting').append(data);
+                    }
+                });
+            };
+
             function makePopover(val) {
                 $("[class*=fu_popover_default]").remove();
                 $('#' + val + '_price').fu_popover({
@@ -199,13 +281,13 @@
                     width: '250px',
                     placement: 'left'
                 });
-
+                var server = '{{$id}}';
                 $.ajax({
                     type: 'GET',
                     data: {
                         'code': val
                     },
-                    url: '/user/mules/runes/'+val+'/edit',
+                    url: '/user/mules/runes/' + server + '/edit',
                     success: function (data) {
                         // console.log(data);
                         $('.fu_popover_default').text('');
@@ -213,6 +295,7 @@
                     }
                 });
             }
+
             function calculate(val) {
                 jQuery('input[class=update' + val + ']').change(function (e) {
                     var total = 0;
@@ -226,20 +309,23 @@
                 });
             }
 
-            $('input[id=update]').change(function (e) {//"#update"
+            $('input[id=update]').keyup(function (e) {//"#update"
                 e.preventDefault();
                 var code = $(this).attr('datacode');
                 var id = $(this).attr('dataid');
                 var value = $(this).val();
-                if (value > 0) {
-                    $(this).css("color", "White");
-                    value = value.replace(/^0+/, '');
-                    $(this).val(value);
-                } else {
-                    $(this).css("color", "Black");
-                    $(this).val('0');
-                }
                 var csrf = '{{csrf_token()}}';
+                var server = '{{$id}}';
+                if (id != 0) {
+                    if (value > 0) {
+                        $(this).css("color", "White");
+                        value = value.replace(/^0+/, '');
+                        $(this).val(value);
+                    } else {
+                        $(this).css("color", "Black");
+                        $(this).val('0');
+                    }
+                }
                 $.ajax({
                     type: 'POST',
                     data: {
@@ -248,7 +334,7 @@
                         'value': value,
                         '_token': csrf
                     },
-                    url: '/user/mules/runes',
+                    url: '/user/mules/runes/' + server + '/store',
                     success: function (data) {
                         console.log(data);
                     }

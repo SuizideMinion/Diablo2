@@ -16,20 +16,25 @@ class UserMiscController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($id)
     {
-        if(isset($_GET['name']))
+        $USetting = \App\Models\UserData::where('user_id', auth()->user()->id)->where('key', 'user.mules.runes.show.last')->first();
+        if ( isset($USetting->value) )
         {
-            $USetting = \App\Models\UserMisc::where('mule', $_GET['name'])->where('user_id', auth()->user()->id)->first();
-            if (!$USetting)
-            {
-                \App\Models\UserMisc::create([
-                    'user_id' => auth()->user()->id,
-                    'mule' => $_GET['name']
+            \App\Models\UserData::where('user_id', auth()->user()->id)
+                ->where('key', 'user.mules.runes.show.last')
+                ->update([
+                    'value' => $id
                 ]);
-            }
         }
-
+        else
+        {
+            \App\Models\UserData::create([
+                'key' => 'user.mules.runes.show.last',
+                'value' => $id,
+                'user_id' => auth()->user()->id
+            ]);
+        }
         if( getUserData('show_runes') == false ) $Misc['rune'] = BaseItems::where('btype', 'rune')->get();
 
         if( getUserData('show_pgems') == false ) $Misc['pgems'] = BaseItems::where('code', 'gpv')
@@ -91,14 +96,15 @@ class UserMiscController extends Controller
             ->get();
         $Misc['misc'] = BaseItems::where('btype', 'jewl')
             ->orWhere('btype', 'gold')
+            ->orWhere('code', 'rvl')
             ->orderBy('btype', 'DESC')
             ->get();
-        if(isset($_GET['getmule'])) $UserMules = UserMisc::where('id', $_GET['getmule'])->get();
-        else $UserMules = UserMisc::where('user_id', auth()->user()->id)->get();
-        $UserMulesforDrop = UserMisc::where('user_id', auth()->user()->id)->get();
+        if(isset($_GET['getmule'])) $UserMules = UserMisc::where('id', $_GET['getmule'])->where('server', $id)->get();
+        else $UserMules = UserMisc::where('user_id', auth()->user()->id)->where('server', $id)->get();
+        $UserMulesforDrop = UserMisc::where('user_id', auth()->user()->id)->where('server', $id)->get();
 
-        if(isset($_GET['blank'])) return view('user.mule.indexblank', compact('Misc', 'UserMules'));
-        else return view('user.mule.index', compact('Misc', 'UserMules', 'UserMulesforDrop'));
+        if(isset($_GET['blank'])) return view('user.mule.indexblank', compact('Misc', 'UserMules', 'id'));
+        else return view('user.mule.index', compact('Misc', 'UserMules', 'UserMulesforDrop', 'id'));
     }
 
     /**
@@ -117,17 +123,19 @@ class UserMiscController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, $id)
     {
-        $USetting = \App\Models\UserMiscDesc::where('user_misc_id', $request->id)->where('key', $request->code)->first();
+//        dd($request,$id);
+        $USetting = \App\Models\UserMiscDesc::where('user_misc_id', $request->id)->where('key', $request->code)->where('server', $id)->first();
         if ( isset($USetting->value) )
         {
             if ( $request->value == '' OR $request->value == 0 ) {
-                UserMiscDesc::where('user_misc_id', $request->id)->where('key', $request->code)->delete();
+                UserMiscDesc::where('user_misc_id', $request->id)->where('key', $request->code)->where('server', $id)->delete();
                 echo 'Deletet='.$request->code.'&val='.$request->value;
             } else {
                 \App\Models\UserMiscDesc::where('user_misc_id', $request->id)
                     ->where('key', $request->code)
+                    ->where('server', $id)
                     ->update([
                         'value' => ($request->value == '' ? 0 : $request->value)
                     ]);
@@ -141,6 +149,7 @@ class UserMiscController extends Controller
             } else {
                 \App\Models\UserMiscDesc::create([
                     'key' => $request->code,
+                    'server' => $id,
                     'value' => ($request->value == '' ? 0 : $request->value),
                     'user_id' => auth()->user()->id,
                     'user_misc_id' => $request->id
@@ -167,11 +176,11 @@ class UserMiscController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($server)
     {
-        $Item = BaseItems::where('code', $id)->first();
-        $Price = UserMiscDesc::where('key', $Item->code.'_price')->where('user_id', auth()->user()->id)->first();
-        return view('user.mule.show', compact('Item', 'Price'));
+        $Item = BaseItems::where('code', $_GET['code'])->first();
+        $Price = UserMiscDesc::where('key', $Item->code.'_price')->where('user_id', auth()->user()->id)->where('server', $server)->first();
+        return view('user.mule.show', compact('Item', 'Price', 'server'));
         //
     }
 
@@ -196,8 +205,27 @@ class UserMiscController extends Controller
      */
     public function destroy($id)
     {
-        UserMiscDesc::where('user_misc_id', $id)->delete();
-        UserMisc::where('id', $id)->delete();
-        return redirect()->action('\App\Http\Controllers\User\Mule\UserMiscController@index');
+        UserMiscDesc::where('user_misc_id', $_GET['id'])->delete();
+        UserMisc::where('id', $_GET['id'])->delete();
+        return redirect()->action('\App\Http\Controllers\User\Mule\UserMiscController@index', $id);
+    }
+
+    public function setting($id)
+    {
+        return view('user.mule.settings', compact('id'));
+    }
+
+    public function newMule(Request $request)
+    {
+//        dd($request->srv);
+        $USetting = \App\Models\UserMisc::where('mule', $request->name)->where('user_id', auth()->user()->id)->where('server', $request->srv)->first();
+        if (!$USetting) {
+            \App\Models\UserMisc::create([
+                'user_id' => auth()->user()->id,
+                'mule' => $request->name,
+                'server' => $request->srv
+            ]);
+        }
+        return redirect()->action('\App\Http\Controllers\User\Mule\UserMiscController@index', $request->srv);
     }
 }

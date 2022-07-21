@@ -14,7 +14,7 @@ class BaseController extends Controller
 {
     public function all($id)
     {
-        $bases = BaseItems::where('type', $id)->get();//all();//all();//all();//where('type', 'weapon')->get
+        $bases = BaseItems::where('type', $id)->get();
         $grouped = $bases->groupBy('btype');
 
         if (!isset($bases)) abort(404); //TODO:: abort funktioniert noch nicht
@@ -23,13 +23,13 @@ class BaseController extends Controller
         {
             $baseItems[$base->code] = new getBaseItem($base->id);
         }
-//        dd($baseItems);
         return view('itemviewer.base', compact('baseItems', 'grouped'));
     }
 
     public function index()
     {
-        dd('hello world');
+//        dd('hello world');
+        return view('itemviewer.base_index');
     }
 
     public function create()

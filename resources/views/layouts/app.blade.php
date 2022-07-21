@@ -32,7 +32,7 @@
 
 <body>
 
-<header id="header" class="header-top">
+<header id="header" class="header-top" style="display: block">
     <div class="container">
 
         <h1><a href="/">D2Mul.es</a></h1>
@@ -43,6 +43,16 @@
                 <li><a class="nav-link" href="/">Home</a></li>
                 <li><a class="nav-link" href="/bases">Bases</a></li>
                 <li><a class="nav-link" href="/uniques">Uniques</a></li>
+                @auth
+                    <li><a class="nav-link" href="/user/mules/runes/{{
+                        ( \App\Models\UserData::where('user_id', auth()->user()->id)->where('key', 'user.mules.runes.show.last')->first() != false ? \App\Models\UserData::where('user_id', auth()->user()->id)->where('key', 'user.mules.runes.show.last')->first()->value : 'scl' )
+                        }}">Misc Mule</a></li>
+                    <li><a class="nav-link" href="/signout">Logout</a></li>
+                @else
+
+                    <li><a class="nav-link" href="/login">Login</a></li>
+                    <li><a class="nav-link" href="/registration">Register</a></li>
+                @endauth
             </ul>
             <i class="bi bi-list mobile-nav-toggle"></i>
         </nav>

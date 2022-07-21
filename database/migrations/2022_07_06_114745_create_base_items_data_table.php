@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('item_id');
             $table->string('key');
+            $table->string('code');
             $table->text('value');
 
             $table->foreign('item_id')->references('id')->on('base_items')->onDelete('cascade');

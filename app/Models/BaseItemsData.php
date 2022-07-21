@@ -15,6 +15,7 @@ class BaseItemsData extends Model
     protected $fillable = [
         'unique_items_id',
         'key',
+        'code',
         'value'
     ];
 }

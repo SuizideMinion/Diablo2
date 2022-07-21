@@ -13,6 +13,7 @@ class UserMiscDesc extends Model
         'user_misc_id',
         'key',
         'value',
+        'server',
         'user_id'
     ];
 }

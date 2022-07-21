@@ -107,4 +107,14 @@ function pSpeak($key, $param, $min , $max, $lang = 'EN', $item_id = false)
     }
 }
 
+function getInvFile($code, $UniqueID = false) {
+    $Updates = \App\Models\Update::where('key', 'invfile')->where('code', $code)->first();
+    if ($Updates) return '/uploads/'. $Updates->value;
+
+    // $Unique = \App\Models\UniqueItemsData:: ->> Geht nicht da Code in Data noch fehlt !
+
+    $Base = \App\Models\BaseItemsData::where('code', $code)->where('key', 'invfile')->first();
+    if ($Base) return '/items/'. strtolower($Base->value) .'.jpg';
+}
+
 ?>
